@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import {
-  getCountries,
-  getCountryData,
+    getCountries,
+    getCountryData,
 } from './controllers/CountryController.js'
 
 const routes = Router()

@@ -13,7 +13,16 @@ export const getCountries = async (req, res) => {
         const response = await countryBaseAPI.get('/AvailableCountries')
         const countries = response.data
 
-        return res.status(200).json(countries)
+        const countriesWithFlags = await Promise.all(countries.map(async (country) => {
+            const flagInfo = await getFlagInfo(country.name)
+            return {
+                ...country,
+                flag: flagInfo ? flagInfo.flag : ''
+            }
+        }))
+
+        return res.status(200).json(countriesWithFlags)
+
     } catch (error) {
         console.error('Error to get countries', error)
         return res.status(500).json({ error: 'Error to get countries' })
